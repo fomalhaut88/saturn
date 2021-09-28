@@ -45,7 +45,17 @@ class Terminal:
 
             # Run module
             elif command.startswith("run "):
-                module_name = command[4:]
+                # Parse command arguments
+                try:
+                    module_name, section = self._parse_run_args(command[4:])
+                except ValueError as exc:
+                    print("Error:", exc.args[0])
+                    continue
+
+                # Set saturn section
+                self._set_section(section)
+
+                # Run target function in the module
                 self._run_module(module_name, scope)
 
             # Execute a python expression
@@ -72,6 +82,33 @@ class Terminal:
 
         except BaseException:
             traceback.print_exc()
+
+    def _parse_run_args(self, args_str):
+        """
+        This function parses argument string for run command and returns
+        the module name and section. If no section is set, it returns None.
+        """
+        # Split argument string
+        parts = args_str.strip().split()
+
+        # If a module name is given only, return it with empty section
+        if len(parts) == 1:
+            return parts[0], None
+
+        # If both are provided, return them
+        elif len(parts) == 2:
+            return parts[0], parts[1]
+
+        # Raise exception if there are too many arguments
+        else:
+            raise ValueError("too many arguments for run command")
+
+    def _set_section(self, section):
+        # Set SATURN_SECTION environment variable
+        if section is not None:
+            os.environ['SATURN_SECTION'] = section
+        else:
+            os.environ.pop('SATURN_SECTION', None)
 
 
 def main():

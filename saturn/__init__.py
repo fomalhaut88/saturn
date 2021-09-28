@@ -1,3 +1,5 @@
+import os
+
 from .version import __version__
 
 
@@ -40,3 +42,13 @@ def safe(expr, scope):
         return eval(expr, {'scope': scope})
     except:
         return None
+
+
+def section(label):
+    """
+    Returns True if the passed label is equal to the section value
+    that is set in run command else False.
+    If nothing is passed as section in run command, the function returns True.
+    """
+    saturn_section = os.environ.get('SATURN_SECTION')
+    return saturn_section is None or saturn_section == str(label)
