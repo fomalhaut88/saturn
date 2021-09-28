@@ -40,3 +40,40 @@ S>>> print(scope)
 S>>> exit
 $
 ```
+
+
+## Work with sections
+
+```python
+# example.py
+
+import saturn
+
+@saturn.main
+def main(scope):
+    print('main')
+
+    if saturn.section('a'):
+        print('section a')
+
+    if saturn.section('b'):
+        print('section b')
+```
+
+Run:
+
+```
+$ saturn
+Welcome to Saturn terminal where you can reruns your Python module keeping its scope in RAM. Version 1.0.
+S>>> run example
+main
+section a
+section b
+S>>> run example a
+main
+section a
+S>>> run example c
+main
+S>>> exit
+$
+```
