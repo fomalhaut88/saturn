@@ -5,9 +5,13 @@ the scope.
 
 import os
 import sys
-import readline
 import traceback
 from importlib import reload
+
+try:
+    import readline
+except ModuleNotFoundError:
+    pass
 
 from .version import __version__
 from .scope import Scope

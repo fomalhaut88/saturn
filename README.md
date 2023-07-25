@@ -8,7 +8,7 @@ The goal is to keep in RAM the datasets that are expensive to load in each run.
 ## Installation
 
 ```
-pip install git+https://github.com/fomalhaut88/saturn.git
+pip install saturn-python
 ```
 
 ## Basic example
